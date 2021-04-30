@@ -14,4 +14,4 @@ def profile(name):
         return redirect(url_for('admin'))
     else:
         return redirect(url_for('index', username=name))
-app.run()
+app.run(debug= True)
