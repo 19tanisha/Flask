@@ -1,17 +1,21 @@
-from flask import Flask, redirect, url_for 
+from flask import Flask, redirect, url_for ,render_template,request
 app = Flask(__name__)
-@app.route('/index/<username>')
-def index(username):
-    return 'Welcome %s'%username
 
-@app.route('/admin')
-def admin():
-    return 'welcome admin'
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-@app.route('/profile/<name>')
-def profile(name):
-    if name == 'admin':
-        return redirect(url_for('admin'))
-    else:
-        return redirect(url_for('index', username=name))
+@app.route('/profile/<username>')
+def profile(username):
+    return render_template('profile.html', username=username, isActive=False)
+
+@app.route('/books')
+def books():
+    books=[
+            {'name':'book1','author':'Tanisha', 'cover':'https://images.template.net/wp-content/uploads/2014/05/Vintage-Book-Cover-Template.jpg'},
+            {'name':'book2','author':'Anisha', 'cover':'https://www.mswordcoverpages.com/wp-content/uploads/2018/10/Book-cover-page-7-CRC.png'},
+            {'name':'book3','author':'Nisha', 'cover':'https://i.pinimg.com/474x/f7/c8/12/f7c812c9b0296cd9f119e33a06d9a256.jpg'},
+            {'name':'book4','author':'Isha', 'cover':'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1594616847'}
+          ]
+    return render_template('book.html', books=books)
 app.run(debug= True)

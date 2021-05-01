@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+{%block body%}
+{%for book in books%}
+<ul>
+    <li>
+        <img style = 'height:150px;width: 100px;'src={{book.cover}}>
+        {{book.name}} by {{book.author}}
+    </li>
+</ul>
+
+
+{%endfor%}
+{%endblock%}
