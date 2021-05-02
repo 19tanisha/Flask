@@ -1,5 +1,13 @@
 from flask import Flask, redirect, url_for ,render_template,request
+from flask_sqlalchemy import SQLAlchemy
+import os
+
+project_dir = os.path.dirname(os.path.absname(__file__))
+database_file = 'sqlite:///{}'.format(os.path.join(project_dir, 'mydatabase.db'))
+
 app = Flask(__name__)
+app.config['SQLACHEMY_DATABASE_URI'] = database_file
+db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
@@ -18,4 +26,14 @@ def books():
             {'name':'book4','author':'Isha', 'cover':'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/contemporary-fiction-night-time-book-cover-design-template-1be47835c3058eb42211574e0c4ed8bf_screen.jpg?ts=1594616847'}
           ]
     return render_template('book.html', books=books)
+
+@app.route('/addbook')
+def addbook():
+    return render_template('addbook.html')
+
+@app.route('/submitform', methods = ['POST'])
+def submitform():
+    name = request.form['name']
+    author= request.form['author']
+    return 'Book name is %s and authour is %s' %(name , author)
 app.run(debug= True)
